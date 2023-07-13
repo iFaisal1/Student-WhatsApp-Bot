@@ -10,7 +10,13 @@ const client = new Client({
 });
 
 const replys = {
-    '!الردود': "- الردود المتاحة في البوت  \n 1- !المكافاة \n 2- !مواد السنة العامة \n لسى افكر بالباقي :) ",
+    '!الردود': `- الردود المتاحة في البوت
+    1- !المكافاة 
+    2- !مواد السنة العامة
+    3- !السورس 
+    لسى افكر بالباقي :) `,
+
+
     '!مواد السنة العامة': `▪️مواد السنة العامة
 ▫️الترم الأول : 
  - أخلاقيات الحوسبة ( ساعتين )
@@ -23,7 +29,10 @@ const replys = {
 - البرمجة الشيئية 1 ( 3 ساعات )
 - ثقافة 1 ( 3 ساعات )
 - رياضيات متقطعة حاسوبية ( 3 ساعات )
-- فيزياء 2 ( 4 ساعات )`
+- فيزياء 2 ( 4 ساعات )`,
+
+
+  '!السورس': 'https://github.com/iFaisal1/Student-WhatsApp-Bot'
 };
 
 client.initialize();
@@ -49,14 +58,14 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
-    const chat = await msg.getChat();
-    if (chat.isGroup) {
-        if (replys[msg.body]) {
-            msg.reply(replys[msg.body]);
-        }
-        if (msg.body === "!المكافاة") {
-            msg.reply(calculateTimeUntilSalary());
-        }
+ const chat = await msg.getChat();
+     if (chat.isGroup) {
+      if (replys[msg.body]) {
+        msg.reply(replys[msg.body]);
+       }
+      if (msg.body === "!المكافاة") {
+        msg.reply(calculateTimeUntilSalary());
+       }
     }
 });
 
