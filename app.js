@@ -11,9 +11,10 @@ const client = new Client({
 
 const replys = {
     '!الردود': `- الردود المتاحة في البوت
-    1- !المكافاة 
+    1- !المكافأة 
     2- !مواد السنة العامة
-    3- !السورس 
+    3- !المصدر 
+    4- !التجارب
     لسى افكر بالباقي :) `,
 
 
@@ -32,7 +33,11 @@ const replys = {
 - فيزياء 2 ( 4 ساعات )`,
 
 
-  '!السورس': 'https://github.com/iFaisal1/Student-WhatsApp-Bot'
+  '!المصدر': 'https://github.com/iFaisal1/Student-WhatsApp-Bot',
+  '!التجارب': `1- https://t.me/CCSE_UJ/193
+  2- https://t.me/simplewhisper/24
+  3- https://twitter.com/renad_gh3/status/1680208412104175617
+  4- https://twitter.com/basmaaxa/status/1681077467740614657`
 };
 
 client.initialize();
@@ -58,14 +63,14 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
- const chat = await msg.getChat();
-     if (chat.isGroup) {
-      if (replys[msg.body]) {
-        msg.reply(replys[msg.body]);
-       }
-      if (msg.body === "!المكافاة") {
-        msg.reply(calculateTimeUntilSalary());
-       }
+    const chat = await msg.getChat();
+    if (chat.isGroup) {
+        if (replys[msg.body]) {
+            msg.reply(replys[msg.body]);
+        }
+        if (msg.body === "!المكافأة") {
+            msg.reply(calculateTimeUntilSalary());
+        }
     }
 });
 
@@ -78,10 +83,19 @@ function calculateTimeUntilSalary() {
     const salaryDay = 27;
     let nextSalaryDate = new Date(today.getFullYear(), today.getMonth(), salaryDay);
 
+    // if today's date is after the 27th, set the next salary date to the 27th of the next month
+    if (today.getDate() > salaryDay) {
+        nextSalaryDate.setMonth(nextSalaryDate.getMonth() + 1);
+    }
+
+    if (today.getDate() === salaryDay) {
+
+        nextSalaryDate.setMonth(nextSalaryDate.getMonth() + 1);
+    }
     if (nextSalaryDate.getDay() === 5) {
         nextSalaryDate.setDate(nextSalaryDate.getDate() - 1);
     } else if (nextSalaryDate.getDay() === 6) {
-        nextSalaryDate.setDate(nextSalaryDate.getDate() + 1);
+        nextSalaryDate.setDate(nextSalaryDate.getDate() + 2);
     }
 
     const timeUntilSalary = nextSalaryDate.getTime() - today.getTime();
@@ -94,3 +108,4 @@ function calculateTimeUntilSalary() {
     return `متبقي على المكافاة: 
 ${days} يوم, ${hours} ساعة, ${minutes} دقيقة, ${seconds} ثانية`;
 }
+
